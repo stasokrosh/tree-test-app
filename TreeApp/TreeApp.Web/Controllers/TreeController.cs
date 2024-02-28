@@ -1,8 +1,7 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using TreeApp.Services;
-using TreeApp.Web.ViewModels;
+using TreeApp.Services.DTO;
 
 namespace TreeApp.Web.Controllers
 {
@@ -11,21 +10,17 @@ namespace TreeApp.Web.Controllers
     public class TreeController
     {
         private readonly ITreeService _service;
-        private readonly IMapper _mapper;
 
         public TreeController(
-            ITreeService service, 
-            IMapper mapper)
+            ITreeService service)
         {
             _service = service;
-            _mapper = mapper;
         }
 
         [HttpPost]
-        public async Task<TreeNodeVM> Get([Required] string name)
+        public async Task<TreeNodeDTO> Get([Required] string name)
         {
-            return _mapper.Map<TreeNodeVM>(
-                await _service.GetOrCreateAsync(name));
+            return await _service.GetOrCreateAsync(name);
         }
     }
 }

@@ -10,7 +10,6 @@ namespace TreeApp.Web.Config
             IConfiguration config)
         {
             return services
-                .AddAutoMapper(typeof(Program))
                 .AddServices(config)
                 .AddTransient<SecureExceptionMiddleware>();
         }

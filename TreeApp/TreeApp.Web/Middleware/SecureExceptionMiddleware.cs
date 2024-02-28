@@ -1,24 +1,15 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Diagnostics;
-using System.Diagnostics;
-using TreeApp.Services;
-using TreeApp.Web.ViewModels;
+﻿using TreeApp.Services;
 
 namespace TreeApp.Web.Middleware
 {
     public class SecureExceptionMiddleware : IMiddleware
     {
         private readonly IJournalWriterService _service;
-        private readonly IMapper _mapper;
-        private readonly ILogger _logger;
 
         public SecureExceptionMiddleware(
-            IJournalWriterService service,
-            IMapper mapper)
+            IJournalWriterService service)
         {
             _service = service;
-            _mapper = mapper;
         }
 
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
@@ -50,8 +41,7 @@ namespace TreeApp.Web.Middleware
                 context.Response.StatusCode =
                     StatusCodes.Status500InternalServerError;
 
-                await context.Response.WriteAsJsonAsync(
-                    _mapper.Map<JournalRecordVM>(record));
+                await context.Response.WriteAsJsonAsync(record);
             }
         }
     }
