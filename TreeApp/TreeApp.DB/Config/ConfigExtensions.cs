@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TreeApp.DB.Context;
-using TreeApp.DB.Entities;
 
 namespace TreeApp.DB.Config
 {
@@ -16,13 +15,8 @@ namespace TreeApp.DB.Config
                 options => options.UseNpgsql(
                     config.GetConnectionString("DefaultConnection")));
 
-            return services.AddScoped<ITreeNodeRepository, TreeNodeRepository>();
-        }
-
-        private static IServiceCollection AddRepository<TEntity>(
-            this IServiceCollection services) where TEntity : class, IEntity
-        {
-            return services.AddScoped<IRepository<TEntity>, Repository<TEntity>>();
+            return services.AddScoped<ITreeNodeRepository, TreeNodeRepository>()
+                .AddScoped<IJournalRecordRepository, JournalRecordRepository>();
         }
 
         public static IConfigurationBuilder AddDBConfig(

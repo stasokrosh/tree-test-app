@@ -8,7 +8,7 @@ namespace TreeApp.DB.Entities.Config
     {
         public virtual void Configure(EntityTypeBuilder<TEntity> builder)
         {
-            builder.ToTable(GetType().Name.Replace("Config", ""))
+            builder.ToTable(typeof(TEntity).Name)
                 .HasKey(x => x.Id);
         }
     }

@@ -1,4 +1,5 @@
 ﻿using TreeApp.Services.Config;
+using TreeApp.Web.Middleware;
 
 namespace TreeApp.Web.Config
 {
@@ -10,7 +11,8 @@ namespace TreeApp.Web.Config
         {
             return services
                 .AddAutoMapper(typeof(Program))
-                .AddServices(config);
+                .AddServices(config)
+                .AddTransient<SecureExceptionMiddleware>();
         }
     }
 }

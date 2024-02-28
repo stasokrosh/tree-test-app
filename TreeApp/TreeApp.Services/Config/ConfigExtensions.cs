@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using TreeApp.DB;
 using TreeApp.DB.Config;
 
 namespace TreeApp.Services.Config
@@ -14,7 +15,9 @@ namespace TreeApp.Services.Config
                 .AddAutoMapper(typeof(ConfigExtensions))
                 .AddDB(config)
                 .AddTransient<ITreeService, TreeService>()
-                .AddTransient<ITreeNodeService, TreeNodeService>();
+                .AddTransient<ITreeNodeService, TreeNodeService>()
+                .AddTransient<IJournalWriterService, JournalWriterService>()
+                .AddTransient<IJournalService, JournalService>();
         }
     }
 }

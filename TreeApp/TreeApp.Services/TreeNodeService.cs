@@ -20,12 +20,13 @@ namespace TreeApp.Services
 
             if (parent == null)
             {
-                throw new Exception();
+                throw new SecureException("Parent was not found");
             }
 
             if (parent.Children.Any(x => x.Name == name))
             {
-                throw new Exception();
+                throw new SecureException(
+                    "There is already a sibling with this name");
             }
 
             await _repository.CreateAsync(
@@ -44,12 +45,13 @@ namespace TreeApp.Services
 
             if (node == null)
             {
-                throw new Exception();
+                throw new SecureException("Node was not found");
             }
 
             if (node.Children.Any())
             {
-                throw new Exception();
+                throw new SecureException(
+                    "Node children should be deleted first");
             }
 
             await _repository.RemoveAsync(node);
@@ -62,13 +64,14 @@ namespace TreeApp.Services
 
             if (node == null)
             {
-                throw new Exception();
+                throw new SecureException("Node was not found");
             }
 
             if (node.Parent != null && node.Parent.Children
                 .Any(x => x.Name == name && x.Id != nodeId))
             {
-                throw new Exception();
+                throw new SecureException(
+                    "There is already a sibling with this name");
             }
 
             node.Name = name;
